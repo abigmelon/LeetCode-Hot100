@@ -25,22 +25,18 @@ _Bool isPalindrome(struct ListNode* head) {
     if (head == NULL || head->next == NULL) {
         return 1;
     }
-    // 1. 计算链表长度
     int count = 0;
     struct ListNode* tmp = head;
     while (tmp != NULL) {
         count++;
         tmp = tmp->next;
     }
-    // 2. 找到后半段的起点（整数除法自动处理奇偶）
     int mid = count / 2;
     tmp = head;
     for (int i = 0; i < mid; i++) {
         tmp = tmp->next;
     }
-    // 3. 反转后半段
     struct ListNode* head2 = reverseList(tmp);
-    // 4. 逐一比较
     while (head2 != NULL) {
         if (head->val != head2->val) {
             return 0;
@@ -50,3 +46,43 @@ _Bool isPalindrome(struct ListNode* head) {
     }
     return 1;
 }
+
+//解析：
+//首先找到链表的中点，然后把后半部分链表反转，最后比较前半部分和反转后的后半部分是否相等
+//如果相等就是回文链表，否则就不是回文链表
+//其实从这道题就可以看出来，有的题目是需要之前积累的思路（反转链表）来完成的，只要想到了就不难
+//以下是更干净的写法：
+// 876. 链表的中间结点
+// struct ListNode* middleNode(struct ListNode* head) {
+//     struct ListNode *slow = head, *fast = head;
+//     while (fast && fast->next) {
+//         slow = slow->next;
+//         fast = fast->next->next;
+//     }
+//     return slow;
+// }
+
+// 206. 反转链表
+// struct ListNode* reverseList(struct ListNode* head) {
+//     struct ListNode *pre = NULL, *cur = head;
+//     while (cur) {
+//         struct ListNode* nxt = cur->next;
+//         cur->next = pre;
+//         pre = cur;
+//         cur = nxt;
+//     }
+//     return pre;
+// }
+
+// bool isPalindrome(struct ListNode* head) {
+//     struct ListNode* mid = middleNode(head);
+//     struct ListNode* head2 = reverseList(mid);
+//     while (head2) {
+//         if (head->val != head2->val) { // 不是回文链表
+//             return false;
+//         }
+//         head = head->next;
+//         head2 = head2->next;
+//     }
+//     return true;
+// }
