@@ -1,0 +1,10 @@
+# 编译生成的文件
+*.exe
+*.out
+*.o
+*.obj
+
+# IDE 文件
+.vscode/
+*.suo
+*.user
