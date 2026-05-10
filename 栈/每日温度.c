@@ -9,7 +9,7 @@
 //     int* ans;
 //     for(int i = 0; i < n; i++){
 //         for(int j = i + 1; j < n; j++){
-//             if(temperatures[j] > temperatures[i]){
+//             if(temperatures[j] > temperatures[i]){  
 //                 ans[i] = j - i;
 //                 break;
 //             }
