@@ -49,3 +49,4 @@ struct ListNode* sortList(struct ListNode* head) {
 // 2.快慢指针找中点，prev用来剪断链表（prev->next = NULL）
 // 3.递归排序左半(head)和右半(slow)
 // 4.mergeTwoLists合并两个有序链表
+// 再想想这个题吧

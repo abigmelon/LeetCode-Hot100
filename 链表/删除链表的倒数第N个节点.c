@@ -31,3 +31,5 @@ struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
     free(del);
     return ans.next;
 }
+
+//下次写sizelist的时候好好想想

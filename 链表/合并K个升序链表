@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+#include <ctype.h>
+
+struct ListNode {
+    int val;
+    struct ListNode *next;
+};
+
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
+    if (list1 == NULL) {
+        return list2;
+    }
+    if (list2 == NULL) {
+        return list1;
+    }
+    struct ListNode *head = NULL;
+    if (list1->val < list2->val) {
+        head = list1;
+        head->next = mergeTwoLists(list1->next, list2);
+    } else {
+        head = list2;
+        head->next = mergeTwoLists(list1, list2->next);
+    }
+    return head;
+}
+
+struct ListNode* mergeKLists(struct ListNode** lists, int listsSize) {
+    if(listsSize == 0) return NULL;
+    if(listsSize == 1) return lists[0];   
+    int index = 0;
+    while(index + 1 < listsSize){
+        struct ListNode* node;
+        node = mergeTwoLists(lists[index], lists[index + 1]);
+        lists[index + 1] = node;
+        index++;
+    }
+    return lists[listsSize - 1];
+}
+
+// 以上是逐个合并的方法，复杂度是O(k*n)，使用第二种方法可以下降到O(N·log k)；
+
+// 迭代版分治（原地合并，不额外分配数组）
+// struct ListNode* mergeKLists_DivideConquer(struct ListNode** lists, int listsSize) {
+//     if (listsSize == 0) return NULL;
+//     if (listsSize == 1) return lists[0];
+
+//     int k = listsSize;
+//     while (k > 1) {
+//         int half = (k + 1) / 2;  // 向上取整，处理奇数情况
+//         for (int i = 0; i < k / 2; i++) {
+//             // 首尾配对：lists[i] 与 lists[k - 1 - i] 合并，结果存回 lists[i]
+//             lists[i] = mergeTwoLists(lists[i], lists[k - 1 - i]);
+//         }
+//         k = half;
+//     }
+//     return lists[0];
+// }
+
+// 递归版分治（更直观）
+// struct ListNode* mergeKLists_DivideConquer_Recursive(struct ListNode** lists, int left, int right) {
+//     if (left == right) return lists[left];
+//     if (left > right)  return NULL;
+    
+//     int mid = left + (right - left) / 2;
+//     struct ListNode* l1 = mergeKLists_DivideConquer_Recursive(lists, left, mid);
+//     struct ListNode* l2 = mergeKLists_DivideConquer_Recursive(lists, mid + 1, right);
+//     return mergeTwoLists(l1, l2);
+// }

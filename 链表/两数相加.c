@@ -30,6 +30,9 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
         node->val = 1;
         node->next = NULL;
         tail->next = node;
-    }
+    }   //记得检查最后一位
     return ans.next;
 }
+
+// 解析：
+// 注意保留进位，头插和尾插的区别和遗落的最后一位1（如果存在）
