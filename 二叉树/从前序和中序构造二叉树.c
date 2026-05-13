@@ -10,13 +10,28 @@ struct TreeNode {
     struct TreeNode *right;
 };
 
-struct TreeNode* build(int preStart, int preEnd, int inStart, int inEnd){
+struct TreeNode* build(int preStart, int preEnd, int inStart, int inEnd, int* preorder, int* inorder){
     if(preStart > preEnd) return NULL;
-    struct TreeNode* node = 
+    int rootVal = preorder[preStart];
+    struct TreeNode* node = malloc(sizeof(struct TreeNode));
+    node->val = rootVal;
+
+    int inRoot = 0;
+    for(int i = inStart; i <= inEnd; i++){
+        if(inorder[i] == rootVal){
+           inRoot = i;
+            break;
+        }
+    }
+    
+    int leftSize = inRoot - inStart;
+    node->left = build(preStart + 1, preStart + leftSize, inStart, inRoot - 1, preorder, inorder);
+    node->right = build(preStart + leftSize + 1, preEnd, inRoot + 1, inEnd, preorder, inorder);
+    return node;
 }
 
 struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int inorderSize) {
-    
+    return build(0, preorderSize - 1, 0, inorderSize - 1, preorder, inorder);
 }
 
 // 前序的第一个节点是根节点，中序根左边是左子树，右边是右子树
