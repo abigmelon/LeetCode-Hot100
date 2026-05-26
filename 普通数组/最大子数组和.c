@@ -7,10 +7,10 @@
 
 int maxSubArray(int* nums, int numsSize) {
     int curMax = nums[0];
-    int ans = nums[0]; 
-    for (int i = 1; i < numsSize; i++) {
+    int ans = nums[0];
+    for(int i = 1; i < numsSize; i++){
         curMax = curMax > 0 ? curMax + nums[i] : nums[i];
-        if (curMax > ans) ans = curMax;
+        if(curMax > ans) ans = curMax;
     }
     return ans;
 }
